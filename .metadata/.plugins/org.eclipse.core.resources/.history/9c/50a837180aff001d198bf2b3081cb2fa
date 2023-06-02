@@ -1,0 +1,106 @@
+package telas;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class Tela_Consultar {
+
+	private JFrame frame;
+	private JTextField txt_ID_Produto;
+	private JTextField txt_Resultado_Consulta;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Tela_Consultar window = new Tela_Consultar();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Tela_Consultar() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 533, 675);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("CONSULTAR");
+		lblNewLabel.setBounds(43, 38, 75, 30);
+		frame.getContentPane().add(lblNewLabel);
+		
+		txt_ID_Produto = new JTextField();
+		txt_ID_Produto.setBounds(99, 87, 135, 30);
+		frame.getContentPane().add(txt_ID_Produto);
+		txt_ID_Produto.setColumns(10);
+		
+		JLabel JLBL_ID_Produto = new JLabel("ID Produto:");
+		JLBL_ID_Produto.setFont(new Font("Calibri", Font.BOLD, 13));
+		JLBL_ID_Produto.setBounds(24, 95, 84, 16);
+		frame.getContentPane().add(JLBL_ID_Produto);
+		
+		txt_Resultado_Consulta = new JTextField();
+		txt_Resultado_Consulta.setBounds(55, 146, 397, 379);
+		frame.getContentPane().add(txt_Resultado_Consulta);
+		txt_Resultado_Consulta.setColumns(10);
+		
+		JButton btn_Voltar = new JButton("Voltar");
+		btn_Voltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btn_Voltar.setBounds(317, 563, 135, 53);
+		frame.getContentPane().add(btn_Voltar);
+		
+		JButton btn_Consultar = new JButton("CONSULTAR");
+		btn_Consultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String busca_consulta = ""; // Definir a busca desejada
+		        Consulta consulta = new Consulta();
+		        try {
+					consulta.Consultar(busca_consulta);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} // Realizar a consulta
+		        
+		        txt_Resultado_Consulta.setText(consulta.getResultadoConsulta().toString());
+			}
+		});
+		btn_Consultar.setFont(new Font("Calibri", Font.BOLD, 20));
+		btn_Consultar.setBounds(305, 84, 147, 37);
+		frame.getContentPane().add(btn_Consultar);
+		
+	}
+
+	public void setVisible(boolean b) {
+		frame.setVisible(b);
+	}
+}

@@ -1,0 +1,122 @@
+package telas;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class Cadastro {
+
+	private final String url = "jdbc:postgresql://localhost/BDGestaoEstoque";
+	private final String user = "postgres";
+	private final String password = "Gustavo@";
+	Connection conn = null;
+	
+	private String nomeprod;
+	private int quantidade;
+	private double valor_Unitario;
+	private Date dta_criacao;
+	
+	
+	public Cadastro() {
+	}
+		
+	public Cadastro(String nomeprod, int quantidade, double valor_Unitario, Date dta_criacao) {
+		super();
+		this.nomeprod = nomeprod;
+		this.quantidade = quantidade;
+		this.valor_Unitario = valor_Unitario;
+		this.dta_criacao = dta_criacao;
+	}
+	
+	
+
+
+	public String getNomeprod() {
+		return nomeprod;
+	}
+
+	public void setNome(String nomeprod) {
+		this.nomeprod = nomeprod;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getValor_Unitario() {
+		return valor_Unitario;
+	}
+
+	public void setValor_Unitario(double valor_Unitario) {
+		this.valor_Unitario = valor_Unitario;
+	}
+
+	public Date getDta_criacao() {
+		return dta_criacao;
+	}
+
+	public void setDta_criacao(Date dta_criacao) {
+		this.dta_criacao = dta_criacao;
+	}
+
+
+	//estabelecendo conexão com servidor PostGre
+	public Connection connect() {
+		
+		try {
+			conn = DriverManager.getConnection(url,user,password);
+			
+			if(conn!=null) {
+				System.out.println("Conexão com PostGreSQL estabelecida com sucesso!");
+			}else {
+				System.out.println("Falha na conexão com o PostGreSQL");
+			}
+			Statement statement = conn.createStatement(); // Criando instancia do objeto que representa um canal de comunicação com banco de dados
+			ResultSet resultSet = statement.executeQuery("SELECT VERSION()");//Esta consulta obtem a versão do PostGreSQL
+			
+			if(resultSet.next()) {
+				System.out.printf(resultSet.getString(1));
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return conn;
+	}
+	
+	private final String QUERY_CADASTRAR = "insert into cadastro (nome,quantidade, val_unit,dta_criacao) values (?,?,?,?)";
+
+	public void cadastraProduto(String nome,int qtd, double valor, Date dta_Entrada) {
+		JOptionPane.showMessageDialog(null,QUERY_CADASTRAR);
+		
+		try (Connection connection = DriverManager.getConnection(url, user, password);
+				PreparedStatement preparedStatement = connection.prepareStatement(QUERY_CADASTRAR)){//final do TRY
+					
+					preparedStatement.setString(1,nome);
+					preparedStatement.setInt(2,qtd);
+					preparedStatement.setDouble(3,valor);
+					if(dta_criacao == null) {
+						dta_Entrada = new java.sql.Date(System.currentTimeMillis());
+						preparedStatement.setDate(4,(java.sql.Date) dta_Entrada);
+					}else {
+						preparedStatement.setDate(4, dta_Entrada));
+					}
+					preparedStatement.executeUpdate();
+						 
+			}catch(SQLException e) {
+				JOptionPane.showConfirmDialog(null, e);
+				e.getMessage();			
+	}
+}
+
+}

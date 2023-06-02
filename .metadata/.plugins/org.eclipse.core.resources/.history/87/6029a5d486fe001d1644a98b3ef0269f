@@ -1,0 +1,79 @@
+package telas;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Tela_Cadastrar {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		
+		try {
+			for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if("Window".equals(info.getName()));
+				javax.swing.UIManager.setLookAndFeel(info.getClassName());
+				break;
+			}
+		}catch(ClassNotFoundException e) {
+			System.err.println(e);
+		}catch(InstantiationException e) {
+			System.err.println(e);
+		}catch(IllegalAccessException e) {
+			System.err.println(e);
+		}catch(javax.swing.UnsupportedLookAndFeelException e) {
+			System.err.println(e);
+		}
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Tela_Cadastrar window = new Tela_Cadastrar();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+	/**
+	 * Create the application.
+	 */
+	public Tela_Cadastrar() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 534, 581);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(188, 297, 128, 102);
+		frame.getContentPane().add(btnNewButton);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+}
