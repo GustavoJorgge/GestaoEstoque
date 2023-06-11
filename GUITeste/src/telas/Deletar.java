@@ -1,5 +1,8 @@
 package telas;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -52,8 +55,7 @@ public class Deletar {
 	
 	
 	public static final String QUERY_BUSCAR = "select * from cadastro where id_cadastro = ?";
-	public void buscar() throws SQLException {
-		
+	public void buscar() throws SQLException,IOException {
 		Connection connection = DriverManager.getConnection(url,user,password);
 		
 		PreparedStatement preparedStatement = connection.prepareStatement(QUERY_BUSCAR);
@@ -77,13 +79,15 @@ public class Deletar {
 	
 	public static final String QUERY_DELETAR = "delete from cadastro where id_cadastro = ?";
 	
-	public void deletar_produto(String deleta) throws SQLException {
-		Connection connection = DriverManager.getConnection(url, user, password);
-		
-		PreparedStatement preparedStatement = connection.prepareStatement(QUERY_DELETAR );
-		preparedStatement.setInt(1,Integer.parseInt(deleta));
-		preparedStatement.executeUpdate();
-		
+	public void deletar_produto(String deleta) throws SQLException, IOException {
+	    Connection connection = DriverManager.getConnection(url, user, password);
+	    
+	    try (PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt", true))) {
+	        writer.println("Item: " + deleta + " Deletado!");			
+	    }	    
+	    PreparedStatement preparedStatement = connection.prepareStatement(QUERY_DELETAR);
+	    preparedStatement.setInt(1, Integer.parseInt(deleta));
+	    preparedStatement.executeUpdate();
 	}
 	
 }

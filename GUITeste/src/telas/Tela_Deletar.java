@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
@@ -100,7 +101,7 @@ public class Tela_Deletar {
 						String id = txt_ID_Prod_Deletar.getText();
 						try {
 							deletar.deletar_produto(id);
-						} catch (SQLException e1) {
+						} catch (SQLException | IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}

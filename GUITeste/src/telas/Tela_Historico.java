@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 
 public class Tela_Historico {
 	
-	Serializacao historico = new Serializacao();
+//	Serializacao historico = new Serializacao();
 	private JFrame frame;
 
 	/**
@@ -62,9 +62,12 @@ public class Tela_Historico {
 		btn_Voltar.setBounds(293, 435, 118, 39);
 		frame.getContentPane().add(btn_Voltar);
 		
-		JTextPane txt_Hi = new JTextPane();
-		txt_Hi.setBounds(34, 81, 393, 342);
-		frame.getContentPane().add(txt_Hi);
+		JTextPane txt_Historico = new JTextPane();
+		txt_Historico.setBounds(34, 81, 393, 342);
+		frame.getContentPane().add(txt_Historico);
+		//Movimentacao movimentacao = new Movimentacao();
+		//String historico = movimentacao.leitor();
+		//txt_Historico.setText();
 	}
 
 	public void setVisible(boolean b) {

@@ -1,1 +1,13 @@
-Cadastro Realizado
+Cadastro Realizado!
+Data:2023-06-05
+teste; Quantidade:1; Valor:2.0
+
+Cadastro Realizado!
+Data:2023-06-05
+serra; Quantidade:2341; Valor:25323.0
+
+java.lang.NumberFormatException: For input string: "s"
+java.lang.NumberFormatException: For input string: "s"Não deve-se digitar letra em campo numerico
+java.lang.NumberFormatException: For input string: "s"Não deve-se digitar letra em campo numerico
+Mon Jun 05 19:57:52 BRT 2023 - java.lang.NumberFormatException: For input string: "s"Não deve-se digitar letra em campo numerico
+05/06/2023 - 20:26:06 - java.lang.NumberFormatException: For input string: "s" Não deve-se digitar letra em campo numérico

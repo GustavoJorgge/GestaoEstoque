@@ -5,6 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -147,13 +151,27 @@ public class Tela_Cadastrar {
 			
 			public void actionPerformed(ActionEvent e) {
 				Cadastro cadastro = new Cadastro();	
-				String nome = JText_NomeProd.getText();
-				int qtd = Integer.parseInt(txt_Entrada.getText());
-				Double valor = Double.parseDouble(txt_ValorProduto.getText());
-				Date dta_criacao = Date(txt_Dta_Entrada.getText());
-				JOptionPane.showMessageDialog(null, "Nome: " + nome + " qtd " + qtd + "Valor: " + valor);
+				try {					
+					String nome = JText_NomeProd.getText();
+					int qtd = Integer.parseInt(txt_Entrada.getText());
+					Double valor = Double.parseDouble(txt_ValorProduto.getText());
+					Date dta_criacao = Date(txt_Dta_Entrada.getText());
+					JOptionPane.showMessageDialog(null, "Nome: " + nome + " qtd " + qtd + "Valor: " + valor);
+					cadastro.cadastraProduto(nome, qtd, valor, dta_criacao);
+				}catch(java.lang.NumberFormatException ex) {
+					/*
+					 * Armazenando a log em arquivos txt as exceções
+					 */
+					try(PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt", true))){
+						Date dataHora = new Date();
+				        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+				        String dataHoraFormatada = format.format(dataHora);
+				        writer.println(dataHoraFormatada + " - " + ex + " Não deve-se digitar letra em campo numérico");
+					}catch(Exception ex1) {
+						ex1.printStackTrace();
+					}
+				}
 				
-				cadastro.cadastraProduto(nome, qtd, valor, dta_criacao);
 			}
 
 			private Date Date(String text) {

@@ -74,15 +74,16 @@ public class Cadastro {
 
 
 	//estabelecendo conexão com servidor PostGre
-	public Connection connect() {
+	public Connection connect() throws IOException {
+		PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt"));
 		
 		try {
 			conn = DriverManager.getConnection(url,user,password);
 			
 			if(conn!=null) {
-				System.out.println("Conexão com PostGreSQL estabelecida com sucesso!");
+				writer.println("Conexao com banco estabelecida com sucesso!");				
 			}else {
-				System.out.println("Falha na conexão com o PostGreSQL");
+				writer.println("Falha na conexão com o banco!");
 			}
 			Statement statement = conn.createStatement(); // Criando instancia do objeto que representa um canal de comunicação com banco de dados
 			ResultSet resultSet = statement.executeQuery("SELECT VERSION()");//Esta consulta obtem a versão do PostGreSQL
@@ -92,6 +93,7 @@ public class Cadastro {
 			}
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
+			writer.println(e);
 		}
 		
 		return conn;
@@ -135,21 +137,23 @@ public class Cadastro {
 	 * Este metodo ira documentar toda movimentação de cadastro;
 	 * Estara armazenando em arquivo txt todo o Log	na pasta do projeto;
 	*/
+	
 	public void documentaMovimentacao(String nome, int qtd, Double valor, Date dta_Entrada) {
-		try(PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt"))){
-			writer.println("Cadastro Realizado!\n" + "Data:" + dta_Entrada + "\n" + nome + "; Quantidade:" + qtd + "; Valor:" + valor + "\n");
-		}catch(IOException e) {
-			e.printStackTrace();
-		}		
+	    try (FileWriter fileWriter = new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt", true);
+	         PrintWriter writer = new PrintWriter(fileWriter)) {
+	        writer.println("Cadastro Realizado!\n" + "Data:" + dta_Entrada + "\n" + nome + "; Quantidade:" + qtd + "; Valor:" + valor + "\n");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	/*
 	 * Este metodo ira documentar todo erro que ocorrer ao cadastrar algum produto;
 	 * Estara armazenando em arquivo txt todo o Log	na pasta do projeto;
 	*/
-	public void documentaErro(String string) {
-		try(PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt"))){
-			writer.println(string);
+	public void documentaErro(String e) {
+		try(PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\programas\\programas original\\TesteSwing\\Logs_Atividades.txt", true))){
+			writer.println(e);
 		}catch(IOException ex) {
 			ex.printStackTrace();
 		}		
